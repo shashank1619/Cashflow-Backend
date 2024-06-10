@@ -1,0 +1,42 @@
+# Ignore compiled class files
+target/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+.project
+.classpath
+.settings/
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+*.env.local
+
+# Application properties with sensitive data
+application-prod.properties
+application-local.properties
+
+# Build outputs
+build/
+out/
+bin/
+
+# Test outputs
+test-output/
+surefire-reports/
