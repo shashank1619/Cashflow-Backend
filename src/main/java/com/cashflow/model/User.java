@@ -90,3 +90,4 @@ public class User {
         updatedAt = LocalDateTime.now();
     }
 }
+// Initial model setup
