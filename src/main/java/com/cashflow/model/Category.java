@@ -77,3 +77,4 @@ public class Category {
         updatedAt = LocalDateTime.now();
     }
 }
+// Category icon support
