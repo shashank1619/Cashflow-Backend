@@ -78,3 +78,4 @@ public class Credit {
         updatedAt = LocalDateTime.now();
     }
 }
+// Credit source types
