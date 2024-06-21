@@ -84,3 +84,4 @@ public class Threshold {
         return category == null;
     }
 }
+// Threshold percentage calc
