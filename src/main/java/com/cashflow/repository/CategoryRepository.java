@@ -52,3 +52,4 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query("SELECT c FROM Category c WHERE c.user.id = :userId AND LOWER(c.name) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
     List<Category> searchCategories(@Param("userId") Long userId, @Param("searchTerm") String searchTerm);
 }
+// Category search
