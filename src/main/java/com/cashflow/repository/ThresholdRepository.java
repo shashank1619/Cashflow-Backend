@@ -73,3 +73,4 @@ public interface ThresholdRepository extends JpaRepository<Threshold, Long> {
      */
     long countByUserIdAndIsBreachedTrue(Long userId);
 }
+// Threshold breach detection
