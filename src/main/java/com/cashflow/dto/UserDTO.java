@@ -45,3 +45,4 @@ public class UserDTO {
     private Integer totalCredits;
     private Integer totalCategories;
 }
+// DTO validation
