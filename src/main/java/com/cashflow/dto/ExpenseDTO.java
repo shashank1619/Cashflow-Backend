@@ -50,3 +50,4 @@ public class ExpenseDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
+// Expense DTO mapping
