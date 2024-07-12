@@ -44,3 +44,4 @@ public class CategoryDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
+// Category response
