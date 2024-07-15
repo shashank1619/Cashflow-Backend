@@ -46,3 +46,4 @@ public class CreditDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
+// Credit DTO enhancements
