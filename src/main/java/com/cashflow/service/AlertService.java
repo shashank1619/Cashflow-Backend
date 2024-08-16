@@ -158,3 +158,4 @@ public class AlertService {
         return thresholdRepository.findByUserIdAndIsBreachedTrue(userId);
     }
 }
+// Alert batch processing
