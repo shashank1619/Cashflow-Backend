@@ -101,3 +101,4 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success("User deactivated successfully", deactivatedUser));
     }
 }
+// User controller docs
