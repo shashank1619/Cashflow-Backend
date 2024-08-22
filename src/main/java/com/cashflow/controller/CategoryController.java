@@ -87,3 +87,4 @@ public class CategoryController {
         return ResponseEntity.ok(ApiResponse.success("Default categories created successfully", null));
     }
 }
+// Category controller improvements
