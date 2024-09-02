@@ -131,3 +131,4 @@ public class ThresholdController {
         return ResponseEntity.ok(ApiResponse.success("Threshold status toggled", threshold));
     }
 }
+// Threshold alerts endpoint
