@@ -36,3 +36,4 @@ public class ResourceNotFoundException extends RuntimeException {
         return fieldValue;
     }
 }
+// Resource not found details
