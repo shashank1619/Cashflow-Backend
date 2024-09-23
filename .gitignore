@@ -40,3 +40,4 @@ bin/
 # Test outputs
 test-output/
 surefire-reports/
+# Ignore build files
