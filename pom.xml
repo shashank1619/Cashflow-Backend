@@ -15,7 +15,7 @@
     
     <groupId>com.cashflow</groupId>
     <artifactId>cashflow-backend</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <name>Cashflow Backend</name>
     <description>Cash Flow Monitoring System - REST API Backend</description>
     
