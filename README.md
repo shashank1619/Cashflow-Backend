@@ -419,3 +419,7 @@ This project is licensed under the MIT License.
 
 Contributions, issues and feature requests are welcome!
 // README update
+
+## Version History
+- v1.1.0 - September 2024
+- v1.0.0 - June 2024
