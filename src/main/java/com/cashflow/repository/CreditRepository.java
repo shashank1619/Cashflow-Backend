@@ -77,3 +77,4 @@ public interface CreditRepository extends JpaRepository<Credit, Long> {
     List<Object[]> getCreditSummaryBySource(@Param("userId") Long userId);
 }
 // Credit summary queries
+// Query optimization
