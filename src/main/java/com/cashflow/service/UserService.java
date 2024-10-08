@@ -141,3 +141,4 @@ public class UserService {
 }
 // Password encryption placeholder
 // User service refactor
+// Security enhancements
