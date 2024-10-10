@@ -71,6 +71,27 @@ public class UserService {
     }
 
     /**
+     * Authenticate user with username and password
+     */
+    @Transactional(readOnly = true)
+    public UserDTO authenticateUser(String username, String password) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+
+        // Verify password (plain text comparison - in production use BCrypt)
+        if (!user.getPassword().equals(password)) {
+            throw new IllegalArgumentException("Invalid password");
+        }
+
+        // Check if user is active
+        if (!user.getIsActive()) {
+            throw new IllegalArgumentException("User account is deactivated");
+        }
+
+        return mapToDTO(user);
+    }
+
+    /**
      * Get all users
      */
     @Transactional(readOnly = true)
