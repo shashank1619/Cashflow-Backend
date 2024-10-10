@@ -40,6 +40,23 @@ public class UserController {
     }
 
     /**
+     * Login user with username and password
+     * POST /api/users/login
+     */
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<UserDTO>> loginUser(@RequestBody UserDTO userDTO) {
+        try {
+            UserDTO authenticatedUser = userService.authenticateUser(
+                    userDTO.getUsername(),
+                    userDTO.getPassword());
+            return ResponseEntity.ok(ApiResponse.success("Login successful", authenticatedUser));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
+    /**
      * Get user by ID
      * GET /api/users/{id}
      */
