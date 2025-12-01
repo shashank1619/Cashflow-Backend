@@ -52,5 +52,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "OR LOWER(u.firstName) LIKE LOWER(CONCAT('%', :searchTerm, '%')) " +
             "OR LOWER(u.lastName) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
     List<User> searchUsers(@Param("searchTerm") String searchTerm);
+
+    /**
+     * Find user by Google ID (for OAuth2 login)
+     */
+    Optional<User> findByGoogleId(String googleId);
 }
-// User search query

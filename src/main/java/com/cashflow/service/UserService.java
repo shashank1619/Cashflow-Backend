@@ -78,6 +78,11 @@ public class UserService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
+        // Check if user is an OAuth user (no password set)
+        if (user.getPassword() == null || "GOOGLE".equals(user.getAuthProvider())) {
+            throw new IllegalArgumentException("This account uses Google Sign-In. Please login with Google.");
+        }
+
         // Verify password (plain text comparison - in production use BCrypt)
         if (!user.getPassword().equals(password)) {
             throw new IllegalArgumentException("Invalid password");
@@ -159,7 +164,52 @@ public class UserService {
                 .totalCategories(user.getCategories() != null ? user.getCategories().size() : 0)
                 .build();
     }
+
+    /**
+     * Find or create OAuth2 user (for Google login)
+     */
+    public UserDTO findOrCreateOAuth2User(String email, String name, String googleId) {
+        // Check if user exists by googleId
+        User user = userRepository.findByGoogleId(googleId).orElse(null);
+
+        if (user != null) {
+            return mapToDTO(user);
+        }
+
+        // Check if user exists by email
+        user = userRepository.findByEmail(email).orElse(null);
+
+        if (user != null) {
+            // Link Google account to existing user
+            user.setGoogleId(googleId);
+            user.setAuthProvider("GOOGLE");
+            return mapToDTO(userRepository.save(user));
+        }
+
+        // Create new user
+        String[] nameParts = name != null ? name.split(" ", 2) : new String[] { email.split("@")[0], "" };
+        String username = email.split("@")[0] + "_" + System.currentTimeMillis() % 10000;
+
+        user = User.builder()
+                .username(username)
+                .email(email)
+                .googleId(googleId)
+                .authProvider("GOOGLE")
+                .firstName(nameParts[0])
+                .lastName(nameParts.length > 1 ? nameParts[1] : "")
+                .isActive(true)
+                .build();
+
+        return mapToDTO(userRepository.save(user));
+    }
+
+    /**
+     * Get user by email
+     */
+    @Transactional(readOnly = true)
+    public UserDTO getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+        return mapToDTO(user);
+    }
 }
-// Password encryption placeholder
-// User service refactor
-// Security enhancements

@@ -38,9 +38,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @NotBlank(message = "Password is required")
-    @Size(min = 6, message = "Password must be at least 6 characters")
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password;
 
     @Column(name = "first_name")
@@ -51,6 +49,13 @@ public class User {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "google_id", unique = true)
+    private String googleId;
+
+    @Column(name = "auth_provider")
+    @Builder.Default
+    private String authProvider = "LOCAL";
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
