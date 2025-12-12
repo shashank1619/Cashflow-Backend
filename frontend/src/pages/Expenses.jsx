@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 import { expenseAPI, categoryAPI } from '../services/api'
+import ConfirmModal from '../components/ConfirmModal'
+import TopNavbar from '../components/TopNavbar'
 
-function Expenses({ user }) {
+function Expenses({ user, theme, onToggleTheme }) {
     const [expenses, setExpenses] = useState([])
     const [categories, setCategories] = useState([])
     const [loading, setLoading] = useState(true)
     const [showModal, setShowModal] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [deleteId, setDeleteId] = useState(null)
     const [formData, setFormData] = useState({
         amount: '',
         description: '',
@@ -63,14 +67,23 @@ function Expenses({ user }) {
         }
     }
 
-    const handleDelete = async (id) => {
-        if (confirm('Are you sure you want to delete this expense?')) {
-            try {
-                await expenseAPI.delete(id)
-                loadData()
-            } catch (err) {
-                alert('Error deleting expense')
-            }
+    const handleDelete = (e, id) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setDeleteId(id)
+        setShowDeleteModal(true)
+    }
+
+    const confirmDelete = async () => {
+        try {
+            await expenseAPI.delete(deleteId)
+            setShowDeleteModal(false)
+            setDeleteId(null)
+            loadData()
+        } catch (err) {
+            console.error('Delete error:', err)
+            alert('Error deleting expense: ' + (err.response?.data?.message || err.message))
+            setShowDeleteModal(false)
         }
     }
 
@@ -84,12 +97,11 @@ function Expenses({ user }) {
 
     return (
         <div>
-            <div className="top-navbar">
-                <h1 className="page-title">Expenses</h1>
+            <TopNavbar title="Expenses" user={user} theme={theme} onToggleTheme={onToggleTheme}>
                 <button className="btn btn-primary" onClick={() => setShowModal(true)}>
                     <i className="bi bi-plus-lg me-2"></i>Add Expense
                 </button>
-            </div>
+            </TopNavbar>
 
             <div className="card">
                 <div className="card-body p-0">
@@ -127,8 +139,9 @@ function Expenses({ user }) {
                                         </td>
                                         <td className="text-end">
                                             <button
+                                                type="button"
                                                 className="btn btn-sm btn-outline-danger"
-                                                onClick={() => handleDelete(expense.id)}
+                                                onClick={(e) => handleDelete(e, expense.id)}
                                             >
                                                 <i className="bi bi-trash"></i>
                                             </button>
@@ -226,6 +239,15 @@ function Expenses({ user }) {
                     </div>
                 </div>
             )}
+
+            {/* Delete Confirmation Modal */}
+            <ConfirmModal
+                isOpen={showDeleteModal}
+                title="Delete Expense"
+                message="Are you sure you want to delete this expense? This action cannot be undone."
+                onConfirm={confirmDelete}
+                onCancel={() => setShowDeleteModal(false)}
+            />
         </div>
     )
 }

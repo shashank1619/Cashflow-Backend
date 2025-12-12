@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 import { creditAPI } from '../services/api'
+import ConfirmModal from '../components/ConfirmModal'
+import TopNavbar from '../components/TopNavbar'
 
-function Credits({ user }) {
+function Credits({ user, theme, onToggleTheme }) {
     const [credits, setCredits] = useState([])
     const [totalCredits, setTotalCredits] = useState(0)
     const [loading, setLoading] = useState(true)
     const [showModal, setShowModal] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [deleteId, setDeleteId] = useState(null)
     const [formData, setFormData] = useState({
         amount: '',
         source: '',
@@ -63,14 +67,23 @@ function Credits({ user }) {
         }
     }
 
-    const handleDelete = async (id) => {
-        if (confirm('Are you sure you want to delete this credit?')) {
-            try {
-                await creditAPI.delete(id)
-                loadData()
-            } catch (err) {
-                alert('Error deleting credit')
-            }
+    const handleDelete = (e, id) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setDeleteId(id)
+        setShowDeleteModal(true)
+    }
+
+    const confirmDelete = async () => {
+        try {
+            await creditAPI.delete(deleteId)
+            setShowDeleteModal(false)
+            setDeleteId(null)
+            loadData()
+        } catch (err) {
+            console.error('Delete error:', err)
+            alert('Error deleting credit: ' + (err.response?.data?.message || err.message))
+            setShowDeleteModal(false)
         }
     }
 
@@ -84,12 +97,11 @@ function Credits({ user }) {
 
     return (
         <div>
-            <div className="top-navbar">
-                <h1 className="page-title">Credits & Income</h1>
+            <TopNavbar title="Credits & Income" user={user} theme={theme} onToggleTheme={onToggleTheme}>
                 <button className="btn btn-primary" onClick={() => setShowModal(true)}>
                     <i className="bi bi-plus-lg me-2"></i>Add Credit
                 </button>
-            </div>
+            </TopNavbar>
 
             {/* Total Credits Card */}
             <div className="card mb-4">
@@ -140,8 +152,9 @@ function Credits({ user }) {
                                         </td>
                                         <td className="text-end">
                                             <button
+                                                type="button"
                                                 className="btn btn-sm btn-outline-danger"
-                                                onClick={() => handleDelete(credit.id)}
+                                                onClick={(e) => handleDelete(e, credit.id)}
                                             >
                                                 <i className="bi bi-trash"></i>
                                             </button>
@@ -235,6 +248,15 @@ function Credits({ user }) {
                     </div>
                 </div>
             )}
+
+            {/* Delete Confirmation Modal */}
+            <ConfirmModal
+                isOpen={showDeleteModal}
+                title="Delete Credit"
+                message="Are you sure you want to delete this credit? This action cannot be undone."
+                onConfirm={confirmDelete}
+                onCancel={() => setShowDeleteModal(false)}
+            />
         </div>
     )
 }
