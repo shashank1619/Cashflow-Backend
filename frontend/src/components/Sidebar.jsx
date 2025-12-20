@@ -32,30 +32,23 @@ function Sidebar({ user, onLogout }) {
                 </ul>
             </nav>
 
-            <div style={{
-                position: 'absolute',
-                bottom: '24px',
-                left: '16px',
-                right: '16px'
-            }}>
-                <div className="d-flex align-items-center gap-3 p-3 rounded mb-2"
-                    style={{ background: 'rgba(255,255,255,0.05)' }}>
+            <div className="sidebar-footer">
+                <div className="sidebar-user-info">
                     <div className="user-avatar">
                         {user?.username?.charAt(0).toUpperCase() || 'U'}
                     </div>
-                    <div className="flex-grow-1" style={{ overflow: 'hidden' }}>
-                        <div className="text-white fw-semibold" style={{ fontSize: '14px' }}>
+                    <div className="user-details">
+                        <div className="user-name">
                             {user?.username || 'User'}
                         </div>
-                        <div className="text-muted text-truncate" style={{ fontSize: '12px' }}>
+                        <div className="user-email">
                             {user?.email || ''}
                         </div>
                     </div>
                 </div>
                 <button
-                    className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2"
+                    className="sidebar-logout"
                     onClick={onLogout}
-                    style={{ padding: '10px' }}
                 >
                     <i className="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
