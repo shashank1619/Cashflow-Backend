@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react'
 import StatsCard from '../components/StatsCard'
 import AlertBanner from '../components/AlertBanner'
 import { expenseAPI, thresholdAPI } from '../services/api'
+import TopNavbar from '../components/TopNavbar'
 
-function Dashboard({ user }) {
+function Dashboard({ user, theme, onToggleTheme }) {
     const [summary, setSummary] = useState(null)
     const [alerts, setAlerts] = useState([])
     const [recentExpenses, setRecentExpenses] = useState([])
@@ -59,13 +60,7 @@ function Dashboard({ user }) {
 
     return (
         <div>
-            <div className="top-navbar">
-                <h1 className="page-title">Dashboard</h1>
-                <div className="user-info">
-                    <span className="text-muted">Welcome back,</span>
-                    <span className="fw-semibold">{user.username}</span>
-                </div>
-            </div>
+            <TopNavbar title="Dashboard" user={user} theme={theme} onToggleTheme={onToggleTheme} />
 
             {/* Alerts */}
             {alerts.length > 0 && (
@@ -88,6 +83,7 @@ function Dashboard({ user }) {
                     value={summary?.totalCredits || 0}
                     label="Total Credits"
                     prefix="₹"
+                    link="/credits"
                 />
                 <StatsCard
                     icon="bi-wallet2"
@@ -95,6 +91,7 @@ function Dashboard({ user }) {
                     value={summary?.totalExpenses || 0}
                     label="Total Expenses"
                     prefix="₹"
+                    link="/expenses"
                 />
                 <StatsCard
                     icon="bi-graph-up-arrow"
@@ -102,12 +99,14 @@ function Dashboard({ user }) {
                     value={summary?.netBalance || 0}
                     label="Net Balance"
                     prefix="₹"
+                    link="/thresholds"
                 />
                 <StatsCard
                     icon="bi-receipt"
                     iconClass="warning"
                     value={summary?.expenseCount || 0}
                     label="Transactions"
+                    link="/expenses"
                 />
             </div>
 

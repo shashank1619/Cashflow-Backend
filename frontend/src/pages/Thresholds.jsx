@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { thresholdAPI, categoryAPI } from '../services/api'
+import { thresholdAPI, categoryAPI, expenseAPI } from '../services/api'
 import AlertBanner from '../components/AlertBanner'
+import TopNavbar from '../components/TopNavbar'
 
-function Thresholds({ user }) {
+function Thresholds({ user, theme, onToggleTheme }) {
     const [thresholds, setThresholds] = useState([])
     const [alerts, setAlerts] = useState([])
     const [categories, setCategories] = useState([])
@@ -99,12 +100,11 @@ function Thresholds({ user }) {
 
     return (
         <div>
-            <div className="top-navbar">
-                <h1 className="page-title">Thresholds & Alerts</h1>
+            <TopNavbar title="Thresholds & Alerts" user={user} theme={theme} onToggleTheme={onToggleTheme}>
                 <button className="btn btn-primary" onClick={() => setShowModal(true)}>
                     <i className="bi bi-plus-lg me-2"></i>Set Threshold
                 </button>
-            </div>
+            </TopNavbar>
 
             {/* Active Alerts */}
             {alerts.length > 0 && (
@@ -177,7 +177,7 @@ function Thresholds({ user }) {
                                         <div className="progress" style={{ height: '10px' }}>
                                             <div
                                                 className={`progress-bar ${threshold.usagePercentage >= 100 ? 'bg-danger' :
-                                                        threshold.usagePercentage >= 80 ? 'bg-warning' : 'bg-success'
+                                                    threshold.usagePercentage >= 80 ? 'bg-warning' : 'bg-success'
                                                     }`}
                                                 style={{ width: `${Math.min(threshold.usagePercentage || 0, 100)}%` }}
                                             ></div>

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { categoryAPI } from '../services/api'
+import TopNavbar from '../components/TopNavbar'
 
-function Categories({ user }) {
+function Categories({ user, theme, onToggleTheme }) {
     const [categories, setCategories] = useState([])
     const [loading, setLoading] = useState(true)
     const [showModal, setShowModal] = useState(false)
@@ -66,12 +67,11 @@ function Categories({ user }) {
 
     return (
         <div>
-            <div className="top-navbar">
-                <h1 className="page-title">Categories</h1>
+            <TopNavbar title="Categories" user={user} theme={theme} onToggleTheme={onToggleTheme}>
                 <button className="btn btn-primary" onClick={() => setShowModal(true)}>
                     <i className="bi bi-plus-lg me-2"></i>Add Category
                 </button>
-            </div>
+            </TopNavbar>
 
             <div className="row">
                 {categories.length === 0 ? (
