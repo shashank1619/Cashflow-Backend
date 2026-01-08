@@ -1,10 +1,11 @@
 # 💰 Cashflow - Expense Monitoring System
 
-A comprehensive **Cash Flow Monitoring System** built with **Java Spring Boot** and **REST APIs** following microservice architecture. This application enables users to track their expenses, manage income credits, set spending thresholds, and receive alerts when limits are exceeded.
+A comprehensive **Cash Flow Monitoring System** with a **Java Spring Boot** backend and **React** frontend. This full-stack application enables users to track expenses, manage income, set spending thresholds, and receive alerts when limits are exceeded.
 
 ![Java](https://img.shields.io/badge/Java-17-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-green)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-blue)
+![React](https://img.shields.io/badge/React-18.2-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14-336791)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
@@ -15,22 +16,32 @@ A comprehensive **Cash Flow Monitoring System** built with **Java Spring Boot** 
 - [Architecture](#-architecture)
 - [Tech Stack](#-tech-stack)
 - [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Frontend Setup](#-frontend-setup)
 - [API Documentation](#-api-documentation)
 - [Database Schema](#-database-schema)
-- [Getting Started](#-getting-started)
 - [API Examples](#-api-examples)
+- [Screenshots](#-screenshots)
 
 ---
 
 ## ✨ Features
 
+### Backend Features
 - **User Management**: Register, authenticate, and manage user accounts
 - **Expense Tracking**: Log expenses with categories, dates, and payment methods
-- **Category Management**: Organize expenses into customizable categories with default templates
+- **Category Management**: Organize expenses into customizable categories
 - **Credit/Income Tracking**: Track income sources and credits
 - **Threshold Alerts**: Set spending limits and receive breach notifications
-- **Financial Summary**: View overall expense summaries with category breakdowns
-- **Date Range Reports**: Generate expense reports for specific periods
+- **Financial Summary**: View expense summaries with category breakdowns
+
+### Frontend Features
+- **Modern UI**: Clean, responsive interface with dark theme
+- **Dashboard**: Visual overview of finances with statistics cards
+- **CRUD Operations**: Full create, read, update, delete for all entities
+- **Real-time Alerts**: Threshold breach notifications
+- **Form Validation**: Client-side validation for all inputs
+- **Responsive Design**: Works on desktop and mobile devices
 
 ---
 
@@ -38,52 +49,31 @@ A comprehensive **Cash Flow Monitoring System** built with **Java Spring Boot** 
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        CLIENT LAYER                              │
-│                   (React.js + Bootstrap)                         │
-└─────────────────────────────────────────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      REST API LAYER                              │
+│                    FRONTEND (React + Vite)                       │
 │  ┌──────────────┬──────────────┬──────────────┬──────────────┐  │
-│  │    User      │   Expense    │   Category   │   Threshold  │  │
-│  │  Controller  │  Controller  │  Controller  │  Controller  │  │
+│  │   Login      │   Dashboard  │   Expenses   │  Categories  │  │
+│  │   Register   │   Credits    │  Thresholds  │   Sidebar    │  │
 │  └──────────────┴──────────────┴──────────────┴──────────────┘  │
-│  ┌─────────────────────────────────────────────────────────────┐ │
-│  │                    Credit Controller                        │ │
-│  └─────────────────────────────────────────────────────────────┘ │
+│                         API Service (Axios)                       │
+└─────────────────────────────────────────────────────────────────┘
+                               │ HTTP
+                               ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    BACKEND (Spring Boot)                         │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │                    REST Controllers                        │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │                    Service Layer                           │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │                  Repository Layer (JPA)                    │   │
+│  └──────────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────┘
                                │
                                ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                      SERVICE LAYER                               │
-│  ┌────────────┬────────────┬────────────┬────────────────────┐  │
-│  │   User     │  Expense   │  Category  │    Threshold       │  │
-│  │  Service   │  Service   │  Service   │    Service         │  │
-│  └────────────┴────────────┴────────────┴────────────────────┘  │
-│  ┌────────────────────────┬────────────────────────────────────┐ │
-│  │     Credit Service     │         Alert Service              │ │
-│  └────────────────────────┴────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    REPOSITORY LAYER (JPA)                        │
-│  ┌────────────┬────────────┬────────────┬────────────────────┐  │
-│  │   User     │  Expense   │  Category  │    Threshold       │  │
-│  │   Repo     │   Repo     │   Repo     │      Repo          │  │
-│  └────────────┴────────────┴────────────┴────────────────────┘  │
-│  ┌─────────────────────────────────────────────────────────────┐ │
-│  │                     Credit Repository                       │ │
-│  └─────────────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      DATABASE LAYER                              │
-│                    ┌──────────────────┐                          │
-│                    │   MySQL / H2     │                          │
-│                    └──────────────────┘                          │
+│                      PostgreSQL Database                         │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -91,16 +81,25 @@ A comprehensive **Cash Flow Monitoring System** built with **Java Spring Boot** 
 
 ## 🛠 Tech Stack
 
+### Backend
 | Technology | Purpose |
 |------------|---------|
 | **Java 17** | Core programming language |
 | **Spring Boot 3.2** | Application framework |
 | **Spring Data JPA** | Data persistence |
 | **Hibernate** | ORM for database operations |
-| **MySQL** | Production database |
-| **H2** | Development/Testing database |
+| **PostgreSQL** | Production database |
 | **Lombok** | Reducing boilerplate code |
 | **Maven** | Build and dependency management |
+
+### Frontend
+| Technology | Purpose |
+|------------|---------|
+| **React 18** | UI library |
+| **Vite** | Build tool and dev server |
+| **React Router 6** | Client-side routing |
+| **Axios** | HTTP client for API calls |
+| **CSS3** | Styling with custom properties |
 
 ---
 
@@ -108,55 +107,123 @@ A comprehensive **Cash Flow Monitoring System** built with **Java Spring Boot** 
 
 ```
 Cashflow-Backend/
-├── src/
-│   └── main/
-│       ├── java/com/cashflow/
-│       │   ├── CashflowApplication.java          # Main entry point
-│       │   ├── controller/                        # REST Controllers
-│       │   │   ├── UserController.java
-│       │   │   ├── ExpenseController.java
-│       │   │   ├── CategoryController.java
-│       │   │   ├── CreditController.java
-│       │   │   └── ThresholdController.java
-│       │   ├── service/                           # Business Logic
-│       │   │   ├── UserService.java
-│       │   │   ├── ExpenseService.java
-│       │   │   ├── CategoryService.java
-│       │   │   ├── CreditService.java
-│       │   │   ├── ThresholdService.java
-│       │   │   └── AlertService.java
-│       │   ├── repository/                        # Data Access
-│       │   │   ├── UserRepository.java
-│       │   │   ├── ExpenseRepository.java
-│       │   │   ├── CategoryRepository.java
-│       │   │   ├── CreditRepository.java
-│       │   │   └── ThresholdRepository.java
-│       │   ├── model/                             # Entity Classes
-│       │   │   ├── User.java
-│       │   │   ├── Expense.java
-│       │   │   ├── Category.java
-│       │   │   ├── Credit.java
-│       │   │   └── Threshold.java
-│       │   ├── dto/                               # Data Transfer Objects
-│       │   │   ├── ApiResponse.java
-│       │   │   ├── UserDTO.java
-│       │   │   ├── ExpenseDTO.java
-│       │   │   ├── CategoryDTO.java
-│       │   │   ├── CreditDTO.java
-│       │   │   ├── ThresholdDTO.java
-│       │   │   ├── AlertDTO.java
-│       │   │   └── ExpenseSummaryDTO.java
-│       │   └── exception/                         # Exception Handling
-│       │       ├── GlobalExceptionHandler.java
-│       │       ├── ResourceNotFoundException.java
-│       │       ├── DuplicateResourceException.java
-│       │       └── ThresholdBreachedException.java
-│       └── resources/
-│           └── application.properties             # Configuration
-├── pom.xml                                        # Maven dependencies
-├── .gitignore
+├── src/main/java/com/cashflow/
+│   ├── CashflowApplication.java
+│   ├── controller/
+│   │   ├── UserController.java
+│   │   ├── ExpenseController.java
+│   │   ├── CategoryController.java
+│   │   ├── CreditController.java
+│   │   └── ThresholdController.java
+│   ├── service/
+│   │   ├── UserService.java
+│   │   ├── ExpenseService.java
+│   │   ├── CategoryService.java
+│   │   ├── CreditService.java
+│   │   ├── ThresholdService.java
+│   │   └── AlertService.java
+│   ├── repository/
+│   ├── model/
+│   ├── dto/
+│   └── exception/
+├── src/main/resources/
+│   └── application.properties
+├── frontend/
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.js
+│   └── src/
+│       ├── App.jsx
+│       ├── main.jsx
+│       ├── index.css
+│       ├── components/
+│       │   ├── Sidebar.jsx
+│       │   ├── StatsCard.jsx
+│       │   └── AlertBanner.jsx
+│       ├── pages/
+│       │   ├── Login.jsx
+│       │   ├── Register.jsx
+│       │   ├── Dashboard.jsx
+│       │   ├── Categories.jsx
+│       │   ├── Expenses.jsx
+│       │   ├── Credits.jsx
+│       │   └── Thresholds.jsx
+│       └── services/
+│           └── api.js
+├── pom.xml
 └── README.md
 ```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Java 17 or higher
+- Maven 3.6+
+- Node.js 18+ and npm
+- PostgreSQL 14+
+
+### Backend Setup
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/shashank1619/Cashflow-Backend.git
+cd Cashflow-Backend
+```
+
+2. **Create PostgreSQL database**
+```bash
+psql -U postgres -c "CREATE DATABASE cashflow_db;"
+```
+
+3. **Configure database** (edit `src/main/resources/application.properties`)
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/cashflow_db
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+```
+
+4. **Build and run**
+```bash
+mvn clean install
+mvn spring-boot:run
+```
+
+5. **Access the API**: `http://localhost:8080/api`
+
+---
+
+## 🎨 Frontend Setup
+
+1. **Navigate to frontend directory**
+```bash
+cd frontend
+```
+
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Start development server**
+```bash
+npm run dev
+```
+
+4. **Access the app**: `http://localhost:3000`
+
+### Frontend Pages
+
+| Page | Route | Description |
+|------|-------|-------------|
+| Login | `/` | User authentication |
+| Register | `/register` | New user registration |
+| Dashboard | `/dashboard` | Financial overview with stats |
+| Categories | `/categories` | Manage expense categories |
+| Expenses | `/expenses` | Track and manage expenses |
+| Credits | `/credits` | Track income and credits |
+| Thresholds | `/thresholds` | Set spending limits |
 
 ---
 
@@ -168,66 +235,48 @@ http://localhost:8080/api
 ```
 
 ### User APIs
-
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `POST` | `/users/register` | Register a new user |
+| `POST` | `/users/login` | Authenticate user |
 | `GET` | `/users/{id}` | Get user by ID |
-| `GET` | `/users/username/{username}` | Get user by username |
-| `GET` | `/users` | Get all users |
 | `PUT` | `/users/{id}` | Update user |
 | `DELETE` | `/users/{id}` | Delete user |
-| `PATCH` | `/users/{id}/deactivate` | Deactivate user |
 
 ### Expense APIs
-
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `POST` | `/expenses` | Add new expense |
-| `GET` | `/expenses/{id}` | Get expense by ID |
-| `GET` | `/expenses/user/{userId}` | Get all user expenses |
-| `GET` | `/expenses/user/{userId}/summary` | **userOverAllExpense** - Get expense summary |
-| `GET` | `/expenses/user/{userId}/category/{categoryId}` | **categoryExpense** - Get expenses by category |
-| `GET` | `/expenses/user/{userId}/summary/range` | Get summary by date range |
+| `GET` | `/expenses/user/{userId}` | Get user expenses |
+| `GET` | `/expenses/user/{userId}/summary` | Get expense summary |
 | `PUT` | `/expenses/{id}` | Update expense |
 | `DELETE` | `/expenses/{id}` | Delete expense |
 
 ### Category APIs
-
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/categories` | Create new category |
-| `GET` | `/categories/{id}` | Get category by ID |
-| `GET` | `/categories/user/{userId}` | **expenseCategories** - Get user's categories |
+| `POST` | `/categories` | Create category |
+| `GET` | `/categories/user/{userId}` | Get user categories |
 | `PUT` | `/categories/{id}` | Update category |
 | `DELETE` | `/categories/{id}` | Delete category |
-| `POST` | `/categories/user/{userId}/defaults` | Create default categories |
 
 ### Credit APIs
-
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `POST` | `/credits` | Add new credit |
-| `GET` | `/credits/{id}` | Get credit by ID |
-| `GET` | `/credits/user/{userId}` | **userCredit** - Get user's credits |
+| `GET` | `/credits/user/{userId}` | Get user credits |
 | `GET` | `/credits/user/{userId}/total` | Get total credits |
-| `GET` | `/credits/user/{userId}/range` | Get credits by date range |
 | `PUT` | `/credits/{id}` | Update credit |
 | `DELETE` | `/credits/{id}` | Delete credit |
 
 ### Threshold APIs
-
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/thresholds` | **setThreshold** - Set expense threshold |
-| `GET` | `/thresholds/{id}` | Get threshold by ID |
-| `GET` | `/thresholds/user/{userId}` | Get all user thresholds |
-| `GET` | `/thresholds/user/{userId}/active` | Get active thresholds |
-| `GET` | `/thresholds/alerts/{userId}` | **thresholdBreachedAlert** - Get breach alerts |
-| `GET` | `/thresholds/check/{userId}` | Check threshold status |
+| `POST` | `/thresholds` | Set threshold |
+| `GET` | `/thresholds/user/{userId}` | Get user thresholds |
+| `GET` | `/thresholds/alerts/{userId}` | Get breach alerts |
 | `PUT` | `/thresholds/{id}` | Update threshold |
 | `DELETE` | `/thresholds/{id}` | Delete threshold |
-| `PATCH` | `/thresholds/{id}/toggle` | Toggle threshold active status |
 
 ---
 
@@ -236,7 +285,7 @@ http://localhost:8080/api
 ```sql
 -- Users Table
 CREATE TABLE users (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGSERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -250,108 +299,46 @@ CREATE TABLE users (
 
 -- Categories Table
 CREATE TABLE categories (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGSERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     description VARCHAR(255),
-    icon_name VARCHAR(50),
-    color_code VARCHAR(10),
-    is_default BOOLEAN DEFAULT FALSE,
-    user_id BIGINT NOT NULL,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    user_id BIGINT REFERENCES users(id),
+    created_at TIMESTAMP
 );
 
 -- Expenses Table
 CREATE TABLE expenses (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGSERIAL PRIMARY KEY,
     amount DECIMAL(10,2) NOT NULL,
     description VARCHAR(255),
     expense_date DATE NOT NULL,
-    payment_method VARCHAR(50),
-    merchant_name VARCHAR(100),
-    is_recurring BOOLEAN DEFAULT FALSE,
-    recurring_frequency VARCHAR(20),
-    user_id BIGINT NOT NULL,
-    category_id BIGINT NOT NULL,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (category_id) REFERENCES categories(id)
+    user_id BIGINT REFERENCES users(id),
+    category_id BIGINT REFERENCES categories(id),
+    created_at TIMESTAMP
 );
 
 -- Credits Table
 CREATE TABLE credits (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGSERIAL PRIMARY KEY,
     amount DECIMAL(10,2) NOT NULL,
     source VARCHAR(100) NOT NULL,
-    description VARCHAR(255),
     credit_date DATE NOT NULL,
-    credit_type VARCHAR(50),
-    is_recurring BOOLEAN DEFAULT FALSE,
-    recurring_frequency VARCHAR(20),
-    user_id BIGINT NOT NULL,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    user_id BIGINT REFERENCES users(id),
+    created_at TIMESTAMP
 );
 
 -- Thresholds Table
 CREATE TABLE thresholds (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGSERIAL PRIMARY KEY,
     limit_amount DECIMAL(10,2) NOT NULL,
     threshold_type VARCHAR(20) DEFAULT 'MONTHLY',
     alert_percentage INT DEFAULT 80,
     is_active BOOLEAN DEFAULT TRUE,
-    is_breached BOOLEAN DEFAULT FALSE,
-    last_alert_sent TIMESTAMP,
-    user_id BIGINT NOT NULL,
-    category_id BIGINT,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (category_id) REFERENCES categories(id)
+    user_id BIGINT REFERENCES users(id),
+    category_id BIGINT REFERENCES categories(id),
+    created_at TIMESTAMP
 );
 ```
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Java 17 or higher
-- Maven 3.6+
-- MySQL 8.0+ (optional, H2 included for development)
-
-### Installation
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/yourusername/Cashflow-Backend.git
-cd Cashflow-Backend
-```
-
-2. **Configure Database** (Optional - for MySQL)
-```properties
-# Edit src/main/resources/application.properties
-spring.datasource.url=jdbc:mysql://localhost:3306/cashflow_db
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-```
-
-3. **Build the project**
-```bash
-mvn clean install
-```
-
-4. **Run the application**
-```bash
-mvn spring-boot:run
-```
-
-5. **Access the API**
-- API: `http://localhost:8080/api`
-- H2 Console: `http://localhost:8080/h2-console`
 
 ---
 
@@ -370,35 +357,27 @@ curl -X POST http://localhost:8080/api/users/register \
   }'
 ```
 
+### Login User
+```bash
+curl -X POST http://localhost:8080/api/users/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "john_doe",
+    "password": "password123"
+  }'
+```
+
 ### Add Expense
 ```bash
 curl -X POST http://localhost:8080/api/expenses \
   -H "Content-Type: application/json" \
   -d '{
     "amount": 50.00,
-    "description": "Lunch at restaurant",
+    "description": "Lunch",
     "categoryId": 1,
     "userId": 1,
-    "expenseDate": "2024-01-15"
+    "expenseDate": "2024-10-15"
   }'
-```
-
-### Set Threshold
-```bash
-curl -X POST http://localhost:8080/api/thresholds \
-  -H "Content-Type: application/json" \
-  -d '{
-    "userId": 1,
-    "categoryId": 1,
-    "limitAmount": 500.00,
-    "thresholdType": "MONTHLY",
-    "alertPercentage": 80
-  }'
-```
-
-### Get Threshold Alerts
-```bash
-curl http://localhost:8080/api/thresholds/alerts/1
 ```
 
 ---
@@ -418,8 +397,10 @@ This project is licensed under the MIT License.
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!
-// README update
+
+---
 
 ## Version History
+- v1.2.0 - October 2024 (React Frontend + PostgreSQL)
 - v1.1.0 - September 2024
 - v1.0.0 - June 2024
