@@ -6,6 +6,8 @@ import Expenses from './pages/Expenses'
 import Categories from './pages/Categories'
 import Credits from './pages/Credits'
 import Thresholds from './pages/Thresholds'
+import Stats from './pages/Stats'
+import AiChat from './components/AiChat'
 import Login from './pages/Login'
 import Register from './pages/Register'
 
@@ -107,9 +109,11 @@ function App() {
                     <Route path="/categories" element={<Categories user={user} theme={theme} onToggleTheme={toggleTheme} />} />
                     <Route path="/credits" element={<Credits user={user} theme={theme} onToggleTheme={toggleTheme} />} />
                     <Route path="/thresholds" element={<Thresholds user={user} theme={theme} onToggleTheme={toggleTheme} />} />
+                    <Route path="/stats" element={<Stats user={user} theme={theme} onToggleTheme={toggleTheme} />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </main>
+            <AiChat user={user} />
         </div>
     )
 }

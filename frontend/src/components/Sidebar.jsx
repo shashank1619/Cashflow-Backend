@@ -6,7 +6,8 @@ function Sidebar({ user, onLogout }) {
         { path: '/expenses', icon: 'bi-wallet2', label: 'Expenses' },
         { path: '/categories', icon: 'bi-tags-fill', label: 'Categories' },
         { path: '/credits', icon: 'bi-cash-stack', label: 'Credits' },
-        { path: '/thresholds', icon: 'bi-bell-fill', label: 'Alerts' }
+        { path: '/thresholds', icon: 'bi-bell-fill', label: 'Alerts' },
+        { path: '/stats', icon: 'bi-bar-chart-line-fill', label: 'Statistics' }
     ]
 
     return (

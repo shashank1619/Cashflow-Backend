@@ -78,4 +78,19 @@ export const thresholdAPI = {
     toggle: (id) => api.patch(`/thresholds/${id}/toggle`)
 }
 
+// ==================== STATS APIs ====================
+
+export const statsAPI = {
+    getMonthlyStats: (userId, year, month) =>
+        api.get(`/stats/monthly/${userId}`, { params: { year, month } }),
+    getTrends: (userId, months = 6, categoryId = null) =>
+        api.get(`/stats/trends/${userId}`, { params: { months, categoryId } })
+}
+
+// ==================== AI APIs ====================
+
+export const aiAPI = {
+    chat: (userId, message) => api.post('/ai/chat', { userId, message })
+}
+
 export default api

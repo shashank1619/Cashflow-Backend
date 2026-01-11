@@ -41,3 +41,5 @@ bin/
 test-output/
 surefire-reports/
 # Ignore build files
+frontend/node_modules/
+frontend/.vite/
