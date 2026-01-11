@@ -1,11 +1,13 @@
 # 💰 Cashflow - Expense Monitoring System
 
-A comprehensive **Cash Flow Monitoring System** with a **Java Spring Boot** backend and **React** frontend. This full-stack application enables users to track expenses, manage income, set spending thresholds, and receive alerts when limits are exceeded.
+A comprehensive **Cash Flow Monitoring System** with a **Java Spring Boot** backend and **React** frontend. This full-stack application enables users to track expenses, manage income, set spending thresholds, view analytics with interactive charts, and get AI-powered financial advice.
 
 ![Java](https://img.shields.io/badge/Java-17-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-green)
 ![React](https://img.shields.io/badge/React-18.2-blue)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14-336791)
+![Chart.js](https://img.shields.io/badge/Chart.js-4.4-FF6384)
+![Gemini AI](https://img.shields.io/badge/Gemini-AI-4285F4)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
@@ -29,15 +31,20 @@ A comprehensive **Cash Flow Monitoring System** with a **Java Spring Boot** back
 
 ### Backend Features
 - **User Management**: Register, authenticate, and manage user accounts
+- **Google OAuth2**: Sign in with Google for seamless authentication
 - **Expense Tracking**: Log expenses with categories, dates, and payment methods
 - **Category Management**: Organize expenses into customizable categories
 - **Credit/Income Tracking**: Track income sources and credits
 - **Threshold Alerts**: Set spending limits and receive breach notifications
 - **Financial Summary**: View expense summaries with category breakdowns
+- **Statistics API**: Monthly trends, category breakdowns, daily spending analytics
+- **AI Integration**: Gemini AI-powered expense insights and advice
 
 ### Frontend Features
-- **Modern UI**: Clean, responsive interface with dark theme
+- **Modern UI**: Clean, responsive interface with light/dark mode toggle
 - **Dashboard**: Visual overview of finances with statistics cards
+- **📊 Statistics Dashboard**: Interactive charts (Line, Doughnut, Bar) with Chart.js
+- **🤖 AI Expense Assistant**: Floating chat interface for AI-powered financial advice
 - **CRUD Operations**: Full create, read, update, delete for all entities
 - **Real-time Alerts**: Threshold breach notifications
 - **Form Validation**: Client-side validation for all inputs
@@ -52,7 +59,7 @@ A comprehensive **Cash Flow Monitoring System** with a **Java Spring Boot** back
 │                    FRONTEND (React + Vite)                       │
 │  ┌──────────────┬──────────────┬──────────────┬──────────────┐  │
 │  │   Login      │   Dashboard  │   Expenses   │  Categories  │  │
-│  │   Register   │   Credits    │  Thresholds  │   Sidebar    │  │
+│  │   Stats📊    │   Credits    │  Thresholds  │   AI Chat🤖  │  │
 │  └──────────────┴──────────────┴──────────────┴──────────────┘  │
 │                         API Service (Axios)                       │
 └─────────────────────────────────────────────────────────────────┘
@@ -61,10 +68,10 @@ A comprehensive **Cash Flow Monitoring System** with a **Java Spring Boot** back
 ┌─────────────────────────────────────────────────────────────────┐
 │                    BACKEND (Spring Boot)                         │
 │  ┌──────────────────────────────────────────────────────────┐   │
-│  │                    REST Controllers                        │   │
+│  │      REST Controllers (User, Expense, Stats, AI)          │   │
 │  └──────────────────────────────────────────────────────────┘   │
 │  ┌──────────────────────────────────────────────────────────┐   │
-│  │                    Service Layer                           │   │
+│  │         Service Layer (includes Gemini AI)                 │   │
 │  └──────────────────────────────────────────────────────────┘   │
 │  ┌──────────────────────────────────────────────────────────┐   │
 │  │                  Repository Layer (JPA)                    │   │
@@ -73,7 +80,7 @@ A comprehensive **Cash Flow Monitoring System** with a **Java Spring Boot** back
                                │
                                ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                      PostgreSQL Database                         │
+│          PostgreSQL Database          │      Gemini AI API      │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -87,8 +94,10 @@ A comprehensive **Cash Flow Monitoring System** with a **Java Spring Boot** back
 | **Java 17** | Core programming language |
 | **Spring Boot 3.2** | Application framework |
 | **Spring Data JPA** | Data persistence |
+| **Spring Security** | Authentication & OAuth2 |
 | **Hibernate** | ORM for database operations |
 | **PostgreSQL** | Production database |
+| **Google Gemini AI** | AI-powered expense insights |
 | **Lombok** | Reducing boilerplate code |
 | **Maven** | Build and dependency management |
 
@@ -99,6 +108,8 @@ A comprehensive **Cash Flow Monitoring System** with a **Java Spring Boot** back
 | **Vite** | Build tool and dev server |
 | **React Router 6** | Client-side routing |
 | **Axios** | HTTP client for API calls |
+| **Chart.js** | Interactive charts and graphs |
+| **Bootstrap Icons** | Icon library |
 | **CSS3** | Styling with custom properties |
 
 ---
@@ -114,18 +125,36 @@ Cashflow-Backend/
 │   │   ├── ExpenseController.java
 │   │   ├── CategoryController.java
 │   │   ├── CreditController.java
-│   │   └── ThresholdController.java
+│   │   ├── ThresholdController.java
+│   │   ├── StatsController.java        # 📊 Statistics API
+│   │   ├── AiController.java           # 🤖 AI Chat API
+│   │   └── OAuth2Controller.java       # Google OAuth
 │   ├── service/
 │   │   ├── UserService.java
 │   │   ├── ExpenseService.java
-│   │   ├── CategoryService.java
-│   │   ├── CreditService.java
-│   │   ├── ThresholdService.java
-│   │   └── AlertService.java
-│   ├── repository/
-│   ├── model/
+│   │   ├── StatsService.java           # 📊 Analytics
+│   │   ├── AiService.java              # 🤖 Gemini Integration
+│   │   └── ...
 │   ├── dto/
-│   └── exception/
+│   │   ├── MonthlyStatsDTO.java        # 📊 Chart data
+│   │   ├── MonthlyTrendDTO.java
+│   │   └── ...
+│   └── ...
+├── frontend/
+│   └── src/
+│       ├── components/
+│       │   ├── Sidebar.jsx
+│       │   ├── TopNavbar.jsx           # Dark mode toggle
+│       │   ├── AiChat.jsx              # 🤖 Floating chat
+│       │   └── ...
+│       ├── pages/
+│       │   ├── Dashboard.jsx
+│       │   ├── Stats.jsx               # 📊 Charts page
+│       │   └── ...
+│       └── services/
+│           └── api.js
+└── README.md
+```
 ├── src/main/resources/
 │   └── application.properties
 ├── frontend/
@@ -184,13 +213,20 @@ spring.datasource.username=your_username
 spring.datasource.password=your_password
 ```
 
-4. **Build and run**
+4. **Set up environment variables** (optional - for AI features)
+```bash
+export GEMINI_API_KEY=your_gemini_api_key
+export GOOGLE_CLIENT_ID=your_google_oauth_client_id
+export GOOGLE_CLIENT_SECRET=your_google_oauth_client_secret
+```
+
+5. **Build and run**
 ```bash
 mvn clean install
 mvn spring-boot:run
 ```
 
-5. **Access the API**: `http://localhost:8080/api`
+6. **Access the API**: `http://localhost:8080/api`
 
 ---
 
@@ -217,13 +253,16 @@ npm run dev
 
 | Page | Route | Description |
 |------|-------|-------------|
-| Login | `/` | User authentication |
+| Login | `/login` | User authentication (+ Google OAuth) |
 | Register | `/register` | New user registration |
-| Dashboard | `/dashboard` | Financial overview with stats |
+| Dashboard | `/` | Financial overview with stats |
 | Categories | `/categories` | Manage expense categories |
 | Expenses | `/expenses` | Track and manage expenses |
 | Credits | `/credits` | Track income and credits |
 | Thresholds | `/thresholds` | Set spending limits |
+| **Statistics** | `/stats` | 📊 Interactive charts and analytics |
+
+> **AI Chat**: Available on all pages via the 🤖 floating button in the bottom-right corner!
 
 ---
 
@@ -277,6 +316,26 @@ http://localhost:8080/api
 | `GET` | `/thresholds/alerts/{userId}` | Get breach alerts |
 | `PUT` | `/thresholds/{id}` | Update threshold |
 | `DELETE` | `/thresholds/{id}` | Delete threshold |
+
+### 📊 Statistics APIs
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/stats/monthly/{userId}` | Get monthly stats with category breakdown |
+| `GET` | `/stats/trends/{userId}?months=6` | Get 6-month spending trends |
+| `GET` | `/stats/trends/{userId}?categoryId=1` | Get trends filtered by category |
+
+### 🤖 AI Chat API
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/ai/chat` | Send message to AI assistant |
+
+**AI Chat Request Body:**
+```json
+{
+  "userId": 1,
+  "message": "How much did I spend on Food this month?"
+}
+```
 
 ---
 
@@ -401,6 +460,12 @@ Contributions, issues and feature requests are welcome!
 ---
 
 ## Version History
+- **v1.3.0** - January 2026
+  - 📊 Monthly Statistics Dashboard with Chart.js
+  - 🤖 AI Expense Assistant with Gemini integration
+  - 🌙 Dark/Light mode toggle
+  - 🔐 Google OAuth2 login
+  - Category-filtered trend charts
 - v1.2.0 - October 2024 (React Frontend + PostgreSQL)
 - v1.1.0 - September 2024
 - v1.0.0 - June 2024
