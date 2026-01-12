@@ -8,6 +8,7 @@ A comprehensive **Cash Flow Monitoring System** with a **Java Spring Boot** back
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14-336791)
 ![Chart.js](https://img.shields.io/badge/Chart.js-4.4-FF6384)
 ![Gemini AI](https://img.shields.io/badge/Gemini-AI-4285F4)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
@@ -230,7 +231,29 @@ mvn spring-boot:run
 
 ---
 
-## 🎨 Frontend Setup
+## 🐳 Docker Deployment (Recommended)
+
+Run the entire application (Frontend + Backend + Database) with a single command!
+
+### Prerequisites
+- Docker & Docker Compose installed
+
+### Quick Start
+1. **Configure Environment** (Optional)
+   Open `docker-compose.yml` and check environment variables if needed.
+
+2. **Run with Docker Compose**
+   ```bash
+   docker-compose up --build
+   ```
+
+3. **Access Application**
+   - Frontend: `http://localhost:3000`
+   - Backend API: `http://localhost:8080/api`
+
+___
+
+## 🎨 Frontend Setup (Manual)
 
 1. **Navigate to frontend directory**
 ```bash
